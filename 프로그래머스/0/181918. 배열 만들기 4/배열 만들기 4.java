@@ -1,28 +1,26 @@
-import java.util.ArrayList;
-
 class Solution {
     public int[] solution(int[] arr) {
-        ArrayList<Integer> stk = new ArrayList<>();
-        int i = 0;
+        // 최대 크기를 arr.length로 설정
+        int[] stk = new int[arr.length];
+        int k = 0; // stk의 현재 크기
+        int i = 0; // arr의 인덱스
 
         while (i < arr.length) {
-            if (stk.isEmpty()) {
-                stk.add(arr[i]);
-                i++;
-            } else if (stk.get(stk.size() - 1) < arr[i]) {
-                stk.add(arr[i]);
-                i++;
-            } else {
-                stk.remove(stk.size() - 1);
+            if (k == 0) { // stk가 비어있을 때
+                stk[k++] = arr[i++];
+            } else if (stk[k - 1] < arr[i]) { // stk의 마지막 원소가 arr[i]보다 작을 때
+                stk[k++] = arr[i++];
+            } else { // stk의 마지막 원소가 arr[i]보다 크거나 같을 때
+                k--; // stk의 마지막 원소 제거
             }
         }
 
-        // ArrayList를 int 배열로 변환
-        int[] result = new int[stk.size()];
-        for (int j = 0; j < stk.size(); j++) {
-            result[j] = stk.get(j);
+        // 결과 배열 생성
+        int[] result = new int[k];
+        for (int j = 0; j < k; j++) {
+            result[j] = stk[j];
         }
-        
+
         return result;
     }
 }
